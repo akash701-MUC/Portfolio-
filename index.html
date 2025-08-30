@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="ta">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Akash C — Portfolio</title>
+  <meta name="description" content="Akash C — B.Sc. Computer Science | Basic Web Developer" />
+  <style>
+    /* Reset + base (kept the light theme you pasted) */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: Inter, 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg,#f6f9ff 0%, #eef6ff 100%);
+      color:#0b2340;
+      -webkit-font-smoothing:antialiased;
+      line-height:1.45;
+    }
+
+    /* Container */
+    .wrap{max-width:1100px;margin:28px auto;padding:20px}
+
+    /* HEADER / NAV */
+    header{
+      position:sticky;top:12px;z-index:50;background:rgba(255,255,255,0.7);
+      backdrop-filter: blur(6px);border-radius:14px;padding:10px 16px;box-shadow:0 6px 20px rgba(12,24,60,0.08);
+      display:flex;align-items:center;gap:12px;justify-content:space-between;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand .logo{
+      width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#06b6d4);
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;box-shadow:0 6px 18px rgba(124,58,237,0.12)
+    }
+    nav ul{list-style:none;display:flex;gap:10px;align-items:center}
+    nav a{display:inline-block;padding:8px 12px;border-radius:10px;color:#0b2340;text-decoration:none;font-weight:600}
+    nav a:hover{background:rgba(7,89,133,0.06)}
+    .hamburger{display:none;font-size:26px;cursor:pointer;padding:6px}
+
+    /* HERO */
+    .hero{
+      margin-top:18px;background:linear-gradient(135deg,#ffffff,#f2fbff);border-radius:16px;padding:36px;
+      display:grid;grid-template-columns: 260px 1fr;gap:28px;align-items:center;box-shadow:0 10px 40px rgba(10,30,60,0.06)
+    }
+    @media (max-width:880px){.hero{grid-template-columns:1fr;text-align:center;padding:26px}}
+    .profile-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+    .profile{
+      width:180px;height:180px;border-radius:50%;object-fit:cover;border:6px solid white;
+      box-shadow: 0 12px 30px rgba(7,30,60,0.12);transform:translateY(-6px);
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+    .profile:hover{transform:translateY(-10px) rotate(-2deg);box-shadow:0 20px 40px rgba(7,30,60,0.18)}
+    .badge{
+      background:linear-gradient(90deg,#7c3aed,#06b6d4);color:white;padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px
+    }
+
+    .hero-info h1{font-size:28px;margin-bottom:6px}
+    .hero-info p.lead{color:#1f3b5a;margin-bottom:12px}
+    .skill-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .chip{background:rgba(12,25,45,0.04);padding:8px 10px;border-radius:999px;font-size:13px;color:#12314a;font-weight:600}
+
+    .cta{display:flex;gap:12px;margin-top:14px}
+    .btn{padding:10px 14px;border-radius:12px;border:0;cursor:pointer;font-weight:700}
+    .btn-primary{background:linear-gradient(90deg,#7c3aed,#06b6d4);color:white}
+    .btn-ghost{background:transparent;border:1px solid rgba(12,25,45,0.06);color:#12314a}
+
+    /* LAYOUT */
+    .two-col{display:grid;grid-template-columns:1fr 320px;gap:20px;margin-top:20px}
+    @media (max-width:880px){.two-col{grid-template-columns:1fr}}
+
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 20px rgba(12,25,45,0.04);border:1px solid rgba(12,25,45,0.02)}
+
+    h2.section-title{margin-bottom:12px;color:#06263f}
+
+    /* Projects grid */
+    .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    @media (max-width:700px){.projects-grid{grid-template-columns:1fr}}
+    .proj{padding:12px;border-radius:10px;background:linear-gradient(180deg,#fbfdff,#f4fbff);border:1px solid rgba(7,30,60,0.03)}
+    .proj h3{Margin-bottom:6px}
+    .proj p{color:#245; font-size:14px}
+
+    /* Personal details list */
+    .details ul{list-style:none}
+    .details li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(7,30,60,0.04);color:#12314a}
+    .details li strong{color:#0b2340}
+
+    /* Contact form */
+    form{display:grid;gap:10px}
+    input,textarea{padding:10px;border-radius:8px;border:1px solid rgba(7,30,60,0.06);font-size:14px}
+    textarea{min-height:110px;resize:vertical}
+    .muted{color:#4b6b86;font-size:13px}
+
+    footer{margin-top:26px;text-align:center;color:#4b6b86;font-size:14px}
+
+    /* small responsive tweaks */
+    @media (max-width:520px){
+      .profile{width:140px;height:140px}
+      .brand .logo{width:44px;height:44px;font-size:16px}
+      nav ul{display:none}
+      .hamburger{display:block}
+    }
+
+    /* ---------- Education logos block ---------- */
+    .edu-logos{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
+    .edu-card{display:flex;gap:12px;align-items:center;min-width:220px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid rgba(7,30,60,0.03)}
+    .edu-logo{width:76px;height:76px;object-fit:contain;border-radius:8px;background:transparent;padding:6px}
+    .edu-text h4{margin:0;font-size:15px;color:#0b2340}
+    .edu-text p{margin:0;color:#3b556b;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="logo">A</div>
+        <div>
+          <div style="font-weight:800">Akash C</div>
+          <!-- kept college mention in header (you can remove if unwanted) -->
+          <div style="font-size:12px;color:#184;opacity:0.8;">B.Sc. Computer Science • Mazharul Uloom College, Ambur</div>
+        </div>
+      </div>
+
+      <nav>
+        <span id="hamb" class="hamburger">☰</span>
+        <ul id="navList">
+          <li><a href="#about">About</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#certificates">Certificates</a></li>
+          <li><a href="#hobbies">Hobbies</a></li>
+          <li><a href="#details">Details</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#" id="downloadResume" style="background:linear-gradient(90deg,#7c3aed,#06b6d4);color:white;padding:8px 12px;border-radius:10px;text-decoration:none">Resume</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero card" aria-labelledby="heroTitle">
+      <div class="profile-wrap">
+        <!-- profile image (circle) -->
+        <img class="profile" src="https://i.ibb.co/N2vXFmDJ/IMG-20240804-103210.jpg" alt="Akash profile picture" />
+        <div class="badge">B.Sc. Computer Science • Student</div>
+      </div>
+
+      <div class="hero-info">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <h1 id="heroTitle">Hi, I'm <span style="color: #7c3aed">Akash C</span></h1>
+          <div class="muted" style="font-weight:700;border-radius:8px;padding:6px 10px;background:rgba(124,58,237,0.06)">Age: 17</div>
+        </div>
+        <p class="lead">Basic Web Developer | Basic Programmer</p>
+
+        <div class="skill-chips" aria-hidden>
+          <span class="chip">HTML</span>
+          <span class="chip">CSS</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Python</span>
+        </div>
+
+        <div class="cta">
+          <a class="btn btn-primary" href="#projects">View Projects</a>
+          <a class="btn btn-ghost" href="mailto:aa7193147@gmail.com">Email Me</a>
+        </div>
+
+        <p class="muted" style="margin-top:12px">Looking for internships & small freelance work. Available to learn and collaborate.</p>
+      </div>
+    </section>
+
+    <!-- MAIN GRID -->
+    <div class="two-col">
+      <main>
+        <!-- ABOUT -->
+        <section id="about" class="card" style="margin-bottom:14px">
+          <h2 class="section-title">About Me</h2>
+          <p class="muted">I am a web developer with a passion for creating beautiful and functional websites. I enjoy turning complex problems into simple, elegant solutions. I balance college with learning web technologies and building projects.</p>
+        </section>
+
+        <!-- EDUCATION (logos + institution names) -->
+        <section id="education" class="card" style="margin-bottom:14px">
+          <h2 class="section-title">Education & Qualifications</h2>
+          <p class="muted" style="margin-bottom:12px;">Institutions & Qualifications</p>
+
+          <div class="edu-logos">
+            <!-- College logo card (show logo + qualification text) -->
+            <div class="edu-card">
+              <!-- Replace src with exact direct image URL from your ibb.co page if this doesn't load -->
+              <img class="edu-logo" src="https://i.ibb.co/4RTTtWBh/college-logo.png" alt="College logo (Mazharul Uloom College)" />
+              <div class="edu-text">
+                <h4>Mazharul Uloom College</h4>
+                <p>B.Sc. Computer Science • Present — Degree</p>
+              </div>
+            </div>
+
+            <!-- School/Govt logo card (show logo + qualification text) -->
+            <div class="edu-card">
+              <!-- Replace src with exact direct image URL from your ibb.co page if this doesn't load -->
+              <img class="edu-logo" src="https://i.ibb.co/1tVw547k/school-logo.png" alt="School / Government logo" />
+              <div class="edu-text">
+                <h4>GOVT ADW Higher Secondary School, Pernambut</h4>
+                <p>Completed — 12th (Computer Science) • Marks: 332</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CERTIFICATES -->
+        <section id="certificates" class="card" style="margin-bottom:14px">
+          <h2 class="section-title">Certificates</h2>
+          <ul style="list-style:none;padding-left:0">
+            <li style="padding:8px 0">HTML & CSS Certificate — FreeCodeCamp</li>
+            <li style="padding:8px 0">JavaScript Certificate — Coursera</li>
+            <li style="padding:8px 0">Responsive Web Design — Google Developer Program</li>
+          </ul>
+        </section>
+
+        <!-- HOBBIES -->
+        <section id="hobbies" class="card" style="margin-bottom:14px">
+          <h2 class="section-title">Hobbies</h2>
+          <p>Full Stack Development, Ethical Hacking, Playing Chess, Traveling</p>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="card" style="margin-bottom:14px">
+          <h2 class="section-title">Projects</h2>
+          <div class="projects-grid">
+            <article class="proj">
+              <h3>Portfolio Website</h3>
+              <p>Responsive single-file portfolio, clean UI and smooth interactions.</p>
+              <div style="margin-top:8px"><a href="#" onclick="alert('This demo project is the live portfolio');return false">Live demo</a></div>
+            </article>
+
+            <article class="proj">
+              <h3>Starter Project</h3>
+              <p>My recent project — starter template hosted on Vercel.</p>
+              <div style="margin-top:8px"><a href="https://html-starter-cyan-nu.vercel.app/" target="_blank" rel="noopener">https://html-starter-cyan-nu.vercel.app/</a></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="card" style="margin-bottom:14px">
+          <h2 class="section-title">Contact Me</h2>
+          <form id="contactForm">
+            <input id="cf_name" type="text" placeholder="Your Name" required />
+            <input id="cf_email" type="email" placeholder="Your Email" required />
+            <textarea id="cf_msg" placeholder="Your Message" required></textarea>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn btn-primary" type="submit">Send</button>
+              <button class="btn btn-ghost" type="button" id="downloadBtn">Download Resume</button>
+            </div>
+            <p id="formStatus" class="muted" style="margin-top:8px"></p>
+          </form>
+        </section>
+      </main>
+
+      <!-- SIDEBAR -->
+      <aside>
+        <div class="card details">
+          <h3 style="margin-bottom:10px">Personal Details</h3>
+          <ul>
+            <li><span><strong>Name:</strong></span><span>Akash C</span></li>
+            <li><span><strong>DOB:</strong></span><span>19/08/2007</span></li>
+            <li><span><strong>Phone:</strong></span><span>+91-6379003909</span></li>
+            <li><span><strong>Email:</strong></span><span>aa7193147@gmail.com</span></li>
+            <li><span><strong>Location:</strong></span><span>217/73D Kovil Street, Mathanappalli, Masigam - 635810</span></li>
+          </ul>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin-bottom:10px">Quick Links</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+            <a href="https://github.com" target="_blank">GitHub</a>
+            <a href="#" id="liveResume">Download Resume</a>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin-bottom:10px">Other</h3>
+          <p class="muted">Available for internships • Willing to learn new tech • Goal: get job to support family</p>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      © 2025 Akash C • Mazharul Uloom College, Ambur
+    </footer>
+  </div>
+
+  <script>
+    // Hamburger toggle for small screens
+    const hamb = document.getElementById('hamb');
+    const navList = document.getElementById('navList');
+    hamb && hamb.addEventListener('click', () => {
+      navList.style.display = navList.style.display === 'flex' ? 'none' : 'flex';
+      navList.style.flexDirection = 'column';
+    });
+
+    // Contact form simulation
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const status = document.getElementById('formStatus');
+      status.textContent = 'Sending...';
+      setTimeout(()=> {
+        status.textContent = 'Thanks! I will get back to you soon.';
+        this.reset();
+      }, 900);
+    });
+
+    // Download resume (creates a simple resume txt)
+    function downloadTextFile(filename, text){
+      const blob = new Blob([text], {type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+    document.getElementById('downloadBtn').addEventListener('click', ()=>{
+      const resumeText = `Akash C
+B.Sc. Computer Science (Present)
+Phone: +91-6379003909
+Email: aa7193147@gmail.com
+Education: GOVT ADW Higher Secondary School, Pernambut — 12th (Computer Science) — Marks: 332
+Skills: HTML, CSS, JavaScript, Python
+Projects: Portfolio Website, Starter Project
+`;
+      downloadTextFile('Akash_C_Resume.txt', resumeText);
+    });
+    document.getElementById('liveResume').addEventListener('click', (e)=>{
+      e.preventDefault();
+      const r = `Akash C - Resume
+Phone: +91-6379003909
+Email: aa7193147@gmail.com
+Education: GOVT ADW Higher Secondary School, Pernambut — 12th (Computer Science) — Marks: 332
+`;
+      downloadTextFile('Akash_C_Resume.txt', r);
+    });
+
+    // small accessibility: keyboard focus for nav links (optional)
+    document.querySelectorAll('nav a').forEach(a => a.addEventListener('keydown', (ev)=> {
+      if(ev.key === 'Enter') a.click();
+    }));
+  </script>
+</body>
+</html>
